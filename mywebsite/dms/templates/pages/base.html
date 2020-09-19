@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n humanize %}
+
+{% block title %}{% trans "Messages" %}{% endblock %}
+
+{% block hero %}
+    <section class="view">
+        <div id="vue_direct_message">
+            <div class="row" style="height: 100vh;">
+                <div class="col-3 blue">
+                    {% include "components/sidebar_links.html" %}
+
+                    <!-- HANDLES -->
+                    {% include "components/user_handles.html" %}
+                </div>
+
+                <div class="col-3 blue lighten-3">
+                    <div class="wrapper">
+                        <!-- HEADER -->
+                        {% block middle_header %}{% endblock %}
+                        <!-- CONTENT -->
+                        {% block middle %}{% endblock %}
+                    </div>
+                </div>
+
+                <div class="col-6 blue">
+                    {% block right %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,93 @@
+<script>
+    var feedapp = new Vue({
+        el: "#vue_feed_app",
+        name: "Feed",
+        delimiters: ["[[", "]]"],
+        data() {
+            return {
+                conversations: [],
+                user: "{{ request.user.username }}",
+                commentingto: undefined,
+                newmessage: "@{{ user_feed.username }} "
+            }
+        },
+        methods: {
+            submitconversation: function () {
+                var newconversation = {
+                    "conversations": [],
+                    "text": this.$data.newmessage,
+                    "creator": "{{ request.user.username }}",
+                    "created_on": "Now"
+                }
+                this.$data.conversations.unshift(newconversation)
+
+                fetch("{% url 'feed:add' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    credentials: "same-origin",
+                    body: JSON.stringify(newconversation)
+                }).then((response) => {
+                    if (response.status === 200) {
+
+                    } else {
+
+                    }
+                    console.log(response)
+                }).catch((error) => {
+                    console.log(error)
+                })
+            },
+            addlike: function (id) {
+                fetch("{% url 'feed:like' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    credentials: "same-origin",
+                    body: JSON.stringify({'id': id})
+                }).then((response) => {
+                    if (response.status === 200) {
+                        response.json().then((e) => { 
+                            $("#likes-count-" + id).text(e.total_likes)
+                            if (e.action === "liked") {
+                                $("#conversation-" + id).addClass("red")
+                            } else {
+                                $("#conversation-" + id).removeClass("red")
+                            }
+                        })
+                    } else {
+                        window.location.reload()
+                    }
+                }).catch((error) => {
+                    console.log(error)
+                })
+            },
+            newcomment: function (id) {
+                var self = this
+                fetch("{% url 'feed:comment' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    credentials: "same-origin",
+                    body: JSON.stringify({ 'id': id, 'text': self.$data.newmessage })
+                }).then((response) => {
+                    $("#new-comment-modal").modal("toggle")
+                }).catch((error) => {
+                    console.log(error)
+                })
+            },
+            shownewmessagemodal: function (id, user, text, conversations) {
+                $("#new-comment-modal").modal("toggle")
+                $("#modal-user").text(user)
+                $("#modal-text").text(text)
+                this.$data.commentingto = id
+            }
+        }
+    })
+</script>

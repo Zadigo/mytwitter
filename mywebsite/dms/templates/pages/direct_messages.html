@@ -1,0 +1,64 @@
+{% extends "pages/base.html" %}
+{% load i18n humanize %}
+
+
+{% block middle %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    {{ receiver.username }}
+                </div>
+            </div>
+            
+            {% for receiver in list_of_users %}
+                <div class="card">
+                    <div class="card-body">
+                        <a>{{ receiver }}</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block right %}
+    <div class="inbox p-3">
+        <div class="row d-flex flex-direction-col justify-content-between">
+            <div class="col-12">
+                {% for message in messages_with_user %}
+                    <div class="card mt-3 mb-3">
+                        <div class="card-body">
+                            {{ message.text }}
+                        </div>
+                    </div>
+                {% endfor %}
+                
+                <transition name="new-message">
+                    <div v-if="shownewmessage" class="card mt-3 mb-3">
+                        <div class="card-body">
+                            <p id="new-message"></p>
+                        </div>
+                    </div>
+                </transition>
+            </div>
+    
+            <div class="col-12">
+                <form @submit.prevent="sendmessage">
+                    <div class="form-group d-flex flex-direction-row justify-content-space">
+                        <input @keypress.enter="sendmessage" v-model="newmessage" type="text" name="message" id="message" class="form-control" autocomplete="off">
+                        <button type="submit" class="btn btn-sm mt-0 mb-0 white">
+                            <i class="fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block vuejs_scripts %}
+    {% if request.path != "/messages/" %}
+        {% include "vue/messages.html" %}    
+    {% endif %}
+{% endblock %}

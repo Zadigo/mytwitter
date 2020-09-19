@@ -1,0 +1,49 @@
+{% extends "pages/index.html" %}
+{% load i18n humanize %}
+
+{% block title %}{% trans "Feed" %}{% endblock %}
+
+{% block middle_header %}
+<!-- NEW -->
+<div class="card">
+    <div class="card-body">
+        
+    </div>
+</div>
+{% endblock %}
+
+
+{% block middle %}
+<div class="row">
+    <div class="col-12">
+        <article>
+            <div class="row">
+                <div v-for="conversation in conversations" :key="conversation.creator" class="col-12">
+                    {% include "components/cards/vue_conversation.html" %}
+                </div>
+            </div>
+        </article>
+
+        <article style="overflow-y: scroll; height: 600px;">
+            {% for conversation in conversations %}
+                {% include "components/cards/conversation.html" %}
+            {% endfor %}
+        </article>
+
+        <!-- MODALS -->
+        {% include "components/modals/new.html" %}
+    </div>
+</div>
+{% endblock %}
+
+{% block right %}
+    <div class="row">
+        <div class="col-12">
+            <form action="{% url 'feed:search' %}" method="get">
+                <div class="form-group">
+                    <input class="form-control" type="search" name="q" id="search">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

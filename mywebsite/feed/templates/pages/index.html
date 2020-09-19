@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load i18n humanize %}
+
+{% block title %}{% trans "Accueil" %}{% endblock %}
+
+{% block hero %}
+    <section class="view">
+        <div id="vue_feed_app">
+            <div class="row" style="height: 100vh;">
+                <div class="col-3 blue">
+                    <div class="row">
+                        <div class="col-12">
+                            {% include "components/sidebar_links.html" %}
+                        </div>
+
+                        <!-- HANDLES -->
+                        {% include "components/user_handles.html" %}
+                    </div>
+                </div>
+
+                <div class="col-6 blue lighten-3">
+                    <div class="wrapper">
+                        <!-- HEADER -->
+                        {% block middle_header %}{% endblock %}
+                        <!-- CONTENT -->
+                        {% block middle %}{% endblock %}    
+                    </div>
+                </div>
+
+                <div class="col-3 blue">
+                    {% block right %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,35 @@
+<div class="actions d-flex flex-direction-row justify-content-right float-right">
+    <div class="action-group">
+        <!-- <div @click="shownewmessagemodal({{ conversation.id }}, {{ conversation.created_by.username }}, {{ conversation.body }}, {{ conversation.conversations }})" class="btn btn-sm btn-circle z-depth-0"> -->
+        <div class="btn btn-sm btn-circle z-depth-0">
+            <i class="fa fa-comment fa-2x"></i>
+        </div>
+
+        <small>
+            {{ conversation.comments_set.count|default:0 }}
+        </small>
+    </div> 
+
+    <div class="action-group">
+        <div class="btn btn-sm btn-circle z-depth-0" @click="addlike('{{ conversation.id }}')">
+            {% if conversation.has_liked %}
+                <i id="like-{{ conversation.id }}" class="fas fa-heart red-text fa-2x"></i>            
+            {% else %}
+                <i id="like-{{ conversation.id }}" class="fas fa-heart fa-2x"></i>            
+            {% endif %}
+        </div>
+
+        <small id="likes-count-{{ conversation.id }}">
+            {{ conversation.like_set.count|default:0 }}
+        </small>
+    </div>
+
+    <div class="action-group">
+        <div class="btn btn-sm btn-circle z-depth-0" @click="share($el, {{ conversation.id }})">
+            <i class="fa fa-retweet fa-2x" @click="share({{ conversation.id }})"></i>
+        </div>
+        <small>
+            {{ conversation.shares_set.count|default:0 }}
+        </small>
+    </div>
+</div>

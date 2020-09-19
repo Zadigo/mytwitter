@@ -1,0 +1,42 @@
+<script>
+    var directmessages = new Vue({
+        el: "#vue_direct_message",
+        name: "DirectMessages",
+        delimiters: ["[[", "]]"],
+        data() {
+            return {
+                newmessage: "",
+                shownewmessage: false,
+
+                testsomething: []
+            }
+        },
+        beforeMount() {
+            var data = "{{ test_something }}"
+            // this.$data.testsomething = JSON.parse("{{ test_something|safe }}")
+            this.$data.testsomething = data
+        },
+        methods: {
+            sendmessage: function () {
+                var self = this
+                fetch("{% url 'directmessages:send' request.user.id receiver.id %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    credentials: "same-origin",
+                    body: JSON.stringify({ text: self.$data.newmessage })
+                }).then((response) => {
+                    var text = response.json().then((e) => {
+                        $("card p#new-message").text(e.text)
+                        self.$data.newmessage = ""
+                        self.$data.shownewmessage = e.state
+                    })
+                }).catch((error) => {
+                    window.location.reload()
+                })
+            }
+        }
+    })
+</script>

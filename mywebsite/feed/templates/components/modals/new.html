@@ -1,0 +1,33 @@
+{% extends "components/modals/base.html" %}
+{% load i18n %}
+
+{% block modal_id %}new-comment-modal{% endblock %}
+
+{% block modal_content %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h3 id="modal-user"></h3>
+            <p id="modal-text"></p>
+        </div>
+    </div>
+    
+    <form @submit.prevent="newcomment(commentingto)">
+        <div class="form-group">
+            <textarea v-model="newmessage" class="form-control" name="new-comment" 
+                id="new-comment" cols="30" rows="10" 
+                    style="height: 70px;"></textarea>
+        </div>
+
+        <div class="actions d-flex flex-direction-row justify-content-between">
+            <div class="left">
+                <button><i class="fa fa-image"></i></button>
+                <button><i class="fa fa-calendar"></i></button>
+            </div>
+            <div class="right">
+                <button type="submit" class="btn btn-sm btn-outline-primary">
+                    {% trans "Send" %}
+                </button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

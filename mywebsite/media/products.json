@@ -1,0 +1,40 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "name": "Kendall",
+            "surname": "Jenner",
+            "price": 145
+        },
+        {
+            "id": 2,
+            "name": "Hailey",
+            "surname": "Baldwin",
+            "price": 345
+        },
+        {
+            "id": 3,
+            "name": "Taylor",
+            "surname": "Swift",
+            "price": 175
+        },
+        {
+            "id": 4,
+            "name": "Selena",
+            "surname": "Gomez",
+            "price": 215
+        },
+        {
+            "id": 5,
+            "name": "Eugenie",
+            "surname": "Bouchard",
+            "price": 389
+        },
+        {
+            "id": 6,
+            "name": "Kylie",
+            "surname": "Jenner",
+            "price": 564
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+<ul class="sidebar">
+    <li>
+        <a href="{% url 'feed:home' %}">Accueil</a>
+    </li>
+    <li>Explorer</li>
+    <li>
+        <a href="{% url 'directmessages:home' %}"></a>
+    </li>
+    <li>Notifications</li>
+    <li>
+        <a href="{% url 'feed:user_timeline' user.username %}">
+            Profil
+        </a>
+    </li>
+    <li>
+        <a class="btn" @click="opennewmessagemodal()">Nouveau</a>
+    </li>
+</ul>

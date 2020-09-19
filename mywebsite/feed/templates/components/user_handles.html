@@ -1,0 +1,8 @@
+<div class="col-12 text-center">
+    <p class="font-weight-bold">
+        <a href="{% url 'feed:user_timeline' user.username %}">
+            {{ user.firstname }}
+        </a>
+    </p>
+    <p class="text-muted">@{{ user.username }}</p>
+</div>
