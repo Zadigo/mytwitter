@@ -15,9 +15,10 @@ class ConversationsManager(QuerySet):
         return self.filter(created_by__id__in=follows_ids)
 
     def annoted_conversations(self, username, follows_ids=None, queryset=None):
-        user_in_likes = When(like__user__username=username, then=True)
-        cases = Case(user_in_likes, default=False, output_field=BooleanField())
-        if queryset:
-            return queryset.annotate(has_liked=cases)
-        return self.timeline(follows_ids).annotate(has_liked=cases)
+        # user_in_likes = When(like__user__username=username, then=True)
+        # cases = Case(user_in_likes, default=False, output_field=BooleanField())
+        # if queryset:
+        #     return queryset.annotate(has_liked=cases)
+        # return self.timeline(follows_ids).annotate(has_liked=cases)
+        return self.timeline(follows_ids)
         

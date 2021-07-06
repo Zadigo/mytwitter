@@ -24,24 +24,15 @@ class Conversation(models.Model):
         return self.created_by.username
 
 
-# class Reply(models.Model):
-#     user = models.ForeignKey(MYUSER, on_delete=models.CASCADE)
-#     conversation = models.ForeignKey(Conversation, on_delete=models.DO_NOTHING, blank=True, null=True)
-#     text = models.CharField(max_length=255, blank=True, null=True)
-#     created_on = models.DateTimeField(auto_now_add=True)
-
-#     class Meta:
-#         pluralize = 'Replies'
-#         ordering = ['-created_on', '-pk']
-
-#     def __str__(self):
-#         return self.conversation.created_by
-
-
-class Like(models.Model):
-    user        = models.ForeignKey(MYUSER, on_delete=models.CASCADE)
+class Reply(models.Model):
+    user = models.ForeignKey(MYUSER, on_delete=models.CASCADE)
     conversation = models.ForeignKey(Conversation, on_delete=models.DO_NOTHING, blank=True, null=True)
-    # reply = models.ForeignKey(Reply, on_delete=models.DO_NOTHING, blank=True, null=True)
+    text = models.CharField(max_length=255, blank=True, null=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = 'Replies'
+        ordering = ['-created_on', '-pk']
 
     def __str__(self):
-        return str(self.conversation.created_by)
+        return self.conversation.created_by
