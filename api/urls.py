@@ -18,7 +18,7 @@ urlpatterns = [
     url(r'^(?P<method>(replies|conversation))/likes/create', likes.create_like),
     url(r'^replies/create', feed.create_reply),
     url(r'^conversation/create', feed.create_conversation),
-    url(r'^replies', feed.feed.get_replies),
+    url(r'^replies', feed.get_replies),
     url(r'^conversations', feed.get_conversations)
 ]
 

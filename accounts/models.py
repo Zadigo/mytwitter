@@ -6,10 +6,13 @@ from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.utils import timezone, functional
+from django.utils import functional, timezone
 from django.utils.translation import gettext_lazy as _
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToCover
 
-from accounts import managers
+from accounts.managers import MyUserManager
+from accounts.utils import upload_to
 
 
 class MyUser(AbstractBaseUser):
@@ -17,13 +20,13 @@ class MyUser(AbstractBaseUser):
     email       = models.EmailField(max_length=255, unique=True)
     firstname      = models.CharField(max_length=100, null=True, blank=True)
     lastname         = models.CharField(max_length=100, null=True, blank=True)
-    username         = models.CharField(max_length=50, null=True, blank=True)
+    username         = models.CharField(max_length=50, null=True, blank=True, unique=True)
     
     is_active        = models.BooleanField(default=True)
     is_admin            = models.BooleanField(default=False)
     is_staff            = models.BooleanField(default=False)
     
-    objects = managers.MyUserManager()
+    objects = MyUserManager()
 
     USERNAME_FIELD      = 'email'
     REQUIRED_FIELDS     = []
@@ -74,9 +77,12 @@ class MyUserProfile(models.Model):
     zip_code           = models.IntegerField(blank=True, null=True)
 
     follows   = models.ManyToManyField('self', related_name='followed_by', symmetrical=False)
-    avatar   = models.URLField(blank=True, null=True)
-
-    objects = models.Manager()
+    avatar   = ProcessedImageField(
+        processors=[ResizeToCover(100, 100)],
+        format='JPEG',
+        options={'quality': 80},
+        upload_to=upload_to
+    )
 
     def __str__(self):
         return self.myuser.email

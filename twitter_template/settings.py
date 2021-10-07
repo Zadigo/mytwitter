@@ -34,9 +34,12 @@ INSTALLED_APPS = [
     'django_extensions',
     'rest_framework',
     'corsheaders',
+
     'accounts',
+    'likes',
     'feed',
     'dms',
+    'api',
     'hero',
 
     # 'social_django',

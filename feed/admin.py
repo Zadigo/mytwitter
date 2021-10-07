@@ -1,7 +1,7 @@
 from django.contrib import admin
-from feed import models
+from feed.models import Conversation, Reply
 
-@admin.register(models.Conversation)
+@admin.register(Conversation)
 class TimeLineAdmin(admin.ModelAdmin):
-    list_display = ['created_by']
+    list_display = ['user']
     date_hierarchy = 'created_on'

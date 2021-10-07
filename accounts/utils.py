@@ -12,3 +12,7 @@ def get_user_profile_model():
         raise ImproperlyConfigured(
             "AUTH_USER_PROFILE_MODEL refers to model '%s' that has not been installed" % settings.AUTH_USER_PROFILE_MODEL
         )
+
+
+def upload_to(instance, name):
+    return f'{instance.pk}/{name}'

@@ -1,20 +1,23 @@
 from api.serializers.users import UserSerializer
-from dms.models import Feed
+from feed.models import Conversation
 from rest_framework import fields
 from rest_framework.serializers import Serializer
 
 
-class CommentSerializer(Serializer):
-    body = fields.CharField()
-    created_by = fields.DateFiedl()
-    created_on = fields.DateField()
-
-
-class ReplySerializer(Serializer):
-    reply = CommentSerializer()
+class AbstractMessageSerializer(Serializer):
     user = UserSerializer()
     text = fields.CharField()
+    created_by = fields.DateField()
     created_on = fields.DateField()
+
+
+class CommentSerializer(AbstractMessageSerializer):
+    """Conversation serializer"""
+
+
+class ReplySerializer(AbstractMessageSerializer):
+    reply = CommentSerializer()
+    text = fields.CharField()
 
 
 class ValidateCommentSerializer(Serializer):

@@ -2,41 +2,49 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.views.decorators.cache import cache_control
 
-from feed import managers
+from feed.managers import ConversationsManager
 
 USER_MODEL = get_user_model()
 
-class Conversation(models.Model):
-    body = models.CharField(max_length=255)
-    created_by = models.ForeignKey(USER_MODEL, on_delete=models.DO_NOTHING)
+class AbstractMessage(models.Model):
+    user = models.ForeignKey(
+        USER_MODEL,
+        on_delete=models.CASCADE
+    )
+    text = models.CharField(max_length=255, blank=True, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ['-created_on']
+        abstract = True
+        ordering = ['-created_on', '-pk']
         indexes = [
-            models.Index(fields=['created_by'])
+            models.Index(fields=['user'])
         ]
 
-    objects = managers.ConversationsManager.as_manager()
-
     def __str__(self):
-        return self.created_by.username
+        return self.user.username
 
 
-class Reply(models.Model):
-    user = models.ForeignKey(USER_MODEL, on_delete=models.CASCADE)
+class Conversation(AbstractMessage):
+    # text = models.CharField(max_length=255)
+    # created_by = models.ForeignKey(USER_MODEL, on_delete=models.DO_NOTHING)
+    # created_on = models.DateTimeField(auto_now_add=True)
+
+    objects = ConversationsManager.as_manager()
+
+
+
+class Reply(AbstractMessage):
+    # user = models.ForeignKey(USER_MODEL, on_delete=models.CASCADE)
+    # text = models.CharField(max_length=255, blank=True, null=True)
+    # created_on = models.DateTimeField(auto_now_add=True)
+
     conversation = models.ForeignKey(
         Conversation,
         on_delete=models.DO_NOTHING,
         blank=True,
         null=True
     )
-    text = models.CharField(max_length=255, blank=True, null=True)
-    created_on = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
+    class Meta(AbstractMessage.Meta):
         verbose_name_plural = 'Replies'
-        ordering = ['-created_on', '-pk']
-
-    def __str__(self):
-        return self.conversation.created_by
