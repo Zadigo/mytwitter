@@ -1,8 +1,11 @@
 from django.contrib import admin
+from accounts.admin import custom_site
 
 from dms.models import DirectMessage
 
 
-@admin.register(DirectMessage)
 class DirectMessagesAdmin(admin.ModelAdmin):
     list_display = ['message_sender', 'message_receiver', 'created_on']
+
+
+custom_site.register(DirectMessage, DirectMessagesAdmin)

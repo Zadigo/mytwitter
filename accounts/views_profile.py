@@ -13,7 +13,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView, View
 
-from accounts import forms
+from accounts.forms import profile
 from accounts.models import MyUser, MyUserProfile
 
 
@@ -23,8 +23,8 @@ class IndexView(TemplateView):
 
 class InformationView(LoginRequiredMixin, View):
     forms = {
-        'form1': forms.BaseProfileForm,
-        'form2': forms.AddressProfileForm
+        'form1': profile.BaseProfileForm,
+        'form2': profile.AddressProfileForm
     }
 
     def get(self, request, *args, **kwargs):
@@ -119,12 +119,12 @@ class PaymentMethodsView(LoginRequiredMixin, View):
 class ChangePasswordView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         context = {
-            'form': forms.CustomChangePasswordForm(request.user),
+            'form': profile.CustomChangePasswordForm(request.user),
         }
         return render(request, 'pages/profile/change_password.html', context)
 
     def post(self, request, **kwargs):
-        form = forms.CustomChangePasswordForm(request.user, request.POST)
+        form = profile.CustomChangePasswordForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)

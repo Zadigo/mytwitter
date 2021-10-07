@@ -28,8 +28,8 @@ class MyUser(AbstractBaseUser):
     
     objects = MyUserManager()
 
-    USERNAME_FIELD      = 'email'
-    REQUIRED_FIELDS     = []
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
     def __str__(self):
         return self.email
@@ -81,7 +81,9 @@ class MyUserProfile(models.Model):
         processors=[ResizeToCover(100, 100)],
         format='JPEG',
         options={'quality': 80},
-        upload_to=upload_to
+        upload_to=upload_to,
+        blank=True,
+        null=True
     )
 
     def __str__(self):
@@ -100,8 +102,6 @@ class SubscribedUser(models.Model):
     """People who subscribed to the website"""
     email       = models.EmailField(blank=True, null=True)
     created_on  = models.DateField(auto_now_add=True)
-
-    objects = models.Manager()
 
     def __str__(self):
         return self.email

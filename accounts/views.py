@@ -13,7 +13,9 @@ from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.generic import FormView, RedirectView, View
 
-from accounts import forms, models
+from accounts import models
+from accounts.forms import authentication as auth_forms
+from accounts.forms import profile as profile_forms
 
 MYUSER = auth.get_user_model()
 
@@ -44,7 +46,7 @@ MYUSER = auth.get_user_model()
 
 
 class SignupView(FormView):
-    form_class = forms.UserSignupForm
+    form_class = auth_forms.UserSignupForm
     template_name = 'pages/registration/signup.html'
     success_url = '/login/'
 
@@ -103,7 +105,7 @@ class SignupView(FormView):
 
 
 class LoginView(FormView):
-    form_class = forms.UserLoginForm
+    form_class = auth_forms.UserLoginForm
     template_name = 'pages/registration/login.html'
     success_url = '/'
 
@@ -141,16 +143,16 @@ class ForgotPasswordView(View):
     a password reset
     """
     def get(self, request, *args, **kwargs):
-        context = {'form': forms.CustomPassowordResetForm}
+        context = {'form': auth_forms.CustomPassowordResetForm}
         return render(request, 'pages/registration/forgot_password.html', context)
 
     def post(self, request, **kwargs):
-        form = forms.CustomPassowordResetForm(request.POST)
+        form = auth_forms.CustomPassowordResetForm(request.POST)
 
         if form.is_valid():
             email = form.cleaned_data['email']
 
-            context = {'form': forms.CustomPassowordResetForm}
+            context = {'form': auth_forms.CustomPassowordResetForm}
 
             user = MYUSER.objects.filter(email__iexact=email)
             if user.exists():
@@ -193,14 +195,14 @@ class UnauthenticatedPasswordResetView(View):
         #     return HttpResponseForbidden(reason='Missing argument')
         
         context = {
-            'form': forms.CustomSetPasswordForm(MYUSER.objects.get(id=1)),
+            'form': auth_forms.CustomSetPasswordForm(MYUSER.objects.get(id=1)),
         }
         return render(request, 'pages/registration/forgot_password_confirm.html', context)
 
     def post(self, request, **kwargs):
         # user_token = request.GET.get('user_token')
         # user = get_object_or_404(MYUSER, id=user_token)
-        form = forms.CustomSetPasswordForm(user)
+        form = auth_forms.CustomSetPasswordForm(user)
         if form.is_valid():
             form.save()
         auth.login(request, user)
