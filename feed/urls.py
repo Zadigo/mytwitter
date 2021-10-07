@@ -16,5 +16,6 @@ urlpatterns = [
     url(r'^u/(?P<username>[a-z]+)/follow$', views.follow_user, name='follow'),
     url(r'^u/(?P<username>\w+)$', views.UserTimeLine.as_view(), name='user_timeline'),
     url(r'^search$', views.SearchView.as_view(), name='search'),
-    url(r'^home$', views.TimeLineView.as_view(), name='home')
+    url(r'^home$', views.TimeLineView.as_view(), name='home'),
+    url(r'^$', views.views.index, name='my_feed')
 ]

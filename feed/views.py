@@ -23,6 +23,10 @@ def parse_users(text):
     return None
 
 
+def index(request, **kwargs):
+    return render(request, 'index.html', {})
+
+
 class TimeLineView(LoginRequiredMixin, ListView):
     model = models.Conversation
     template_name = 'pages/feed.html'

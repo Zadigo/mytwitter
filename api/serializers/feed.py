@@ -1,7 +1,7 @@
-from dms.models import Feed
-from rest_framework.serializers import Serializer
-from rest_framework import fields
 from api.serializers.users import UserSerializer
+from dms.models import Feed
+from rest_framework import fields
+from rest_framework.serializers import Serializer
 
 
 class CommentSerializer(Serializer):

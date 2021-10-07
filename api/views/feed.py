@@ -36,4 +36,3 @@ def create_reply(request, **kwargs):
     serializer = validate_serializer(ValidateReplySerializer, request)
     serializer.save(request)
     return Response(data=serializer.data)
-
