@@ -4,7 +4,9 @@ from rest_framework.serializers import Serializer
 
 
 class UserSerializer(Serializer):
+    id = fields.IntegerField(read_only=True)
     username = fields.CharField()
+    get_full_name = fields.CharField()
 
 
 class ValidateFollowingSerializer(Serializer):

@@ -3,6 +3,7 @@ from django.contrib.admin.sites import AdminSite
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth import admin as auth_admin
 from django.contrib.auth.models import Group
+from rest_framework.authtoken.models import Token
 from django.utils.translation import gettext_lazy as _
 
 from accounts import forms, models
@@ -61,4 +62,5 @@ class SubscribedUserAdmin(admin.ModelAdmin):
 # admin.site.unregister(Group)
 custom_site.register(models.MyUser, MyUserAdmin)
 custom_site.register(models.MyUserProfile, MyUserProfileAdmin)
+custom_site.register(Token)
 # custom_admin.register(models.SubscribedUser, models.SubscribedUser)

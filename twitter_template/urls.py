@@ -6,6 +6,8 @@ from accounts.admin import custom_site
 from django.urls import path, include
 
 urlpatterns = [
+    url('', include('social_django.urls', namespace='social')),
+    
     path('api/v1/', include('api.urls')),
     path('messages/', include('dms.urls')),
     path('feed/', include('feed.urls')),

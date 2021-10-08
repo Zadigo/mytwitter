@@ -1,6 +1,5 @@
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.views.decorators.cache import cache_control
 
 from feed.managers import ConversationsManager
 
@@ -26,19 +25,11 @@ class AbstractMessage(models.Model):
 
 
 class Conversation(AbstractMessage):
-    # text = models.CharField(max_length=255)
-    # created_by = models.ForeignKey(USER_MODEL, on_delete=models.DO_NOTHING)
-    # created_on = models.DateTimeField(auto_now_add=True)
-
     objects = ConversationsManager.as_manager()
 
 
 
 class Reply(AbstractMessage):
-    # user = models.ForeignKey(USER_MODEL, on_delete=models.CASCADE)
-    # text = models.CharField(max_length=255, blank=True, null=True)
-    # created_on = models.DateTimeField(auto_now_add=True)
-
     conversation = models.ForeignKey(
         Conversation,
         on_delete=models.DO_NOTHING,

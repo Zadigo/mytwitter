@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'rest_framework',
     'corsheaders',
+    'rest_framework.authtoken',
 
     'accounts',
     'likes',
@@ -42,7 +43,7 @@ INSTALLED_APPS = [
     'api',
     'hero',
 
-    # 'social_django',
+    'social_django',
     # 'dashboard',
 ]
 
@@ -73,10 +74,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-
                 'django.template.context_processors.i18n',
+                
                 'social_django.context_processors.backends',
-                'social_django.context_processors.login_redirect',
+                'social_django.context_processors.login_redirect'
             ],
             'libraries': {
                 'navs': 'templatetags.navs',
@@ -151,6 +152,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # AUTHENTICATION BACKENDS
 
+
 AUTH_USER_MODEL = 'accounts.MyUser'
 
 AUTHENTICATION_BACKENDS = [
@@ -164,6 +166,10 @@ AUTHENTICATION_BACKENDS = [
 
 
 # SOCIAL DJANGO
+
+SOCIAL_AUTH_JSONFIELD_ENABLED = True
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
 LOGIN_URL = 'accounts:login'
 
@@ -293,3 +299,28 @@ except:
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}
+
+
+# CORS
+
+CORS_ORIGIN_ALLOW_ALL = False
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ORIGIN_REGEX_WHITELIST = [
+    r'^https?\:\/\/localhost\:808\d{1}$',
+    r'^https?\:\/\/192\.168\.0\.\d{3}\:8080$'
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'localhost:8080',
+    '192.168.0.103:8080',
+]
