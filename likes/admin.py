@@ -4,6 +4,6 @@ from likes.models import Like
 
 
 class LikeAdmin(admin.ModelAdmin):
-    list_display = ['conversation']
+    list_display = ['conversation', 'reply']
 
 custom_site.register(Like, LikeAdmin)

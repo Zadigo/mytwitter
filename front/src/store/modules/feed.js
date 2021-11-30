@@ -1,6 +1,6 @@
 var _ = require('lodash')
 
-var directMessages = {
+var directMessagesModule = {
     namespaced: true,
 
     state: () => ({
@@ -8,8 +8,18 @@ var directMessages = {
     }),
 
     mutations: {
-        setReplies(state, payload) {
+        setDirectMessages(state, payload) {
+            // Stores the direct messages of
+            // a givent user
             state.messages = payload
+        }
+    },
+
+    getters: {
+        hasMessages(state) {
+            // Indicates if there are direct
+            // messages
+            return state.messages.length > 0
         }
     }
 }
@@ -24,18 +34,30 @@ var feedsModule = {
 
     mutations: {
         setComments(state, payload) {
+            // Stores all the comments
             state.comments = payload
         },
 
+        setComment(state, payload) {
+            // Add a newly created comment
+            // to the stack
+            state.comments.splice(0, 0, payload)
+        },
+
         setReplies(state, payload) {
+            // Stores all the replies for
+            // the comments
             state.replies = payload
         },
 
         toggleLike(state, payload) {
-            var isComment = payload.forReplies
+            // Toggle the liked flag when
+            // the user likes or unlikes an
+            // item in the stack
             var item = {}
             var items = []
-            if (isComment) {
+
+            if (payload.forReplies) {
                 items = state.comments
             } else {
                 items = state.replies
@@ -47,18 +69,25 @@ var feedsModule = {
     
     getters: {
         getComment(state) {
+            // Get a specific comment
             return (id) => {
                 return _.find(state.comments, ['id', id])
             }
         },
 
         numberOfReplies(state) {
+            // Get the total number of replies
             return state.replies.length
+        },
+
+        hasComments(state) {
+            // Indicates if there are a comments
+            return state.comments.length > 0
         }
     },
 
     modules: {
-        directMessages
+        directMessagesModule
     }
 }
 

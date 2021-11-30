@@ -5,11 +5,8 @@ import axios from 'axios'
 
 var client = axios.create({
     baseURL: 'http://127.0.0.1:8000/api/v1/',
+    headers: { 'Content-Type': 'application/json' },
     responseType: 'json',
-    headers: {
-        'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
-    },
     withCredentials: true
 })
 

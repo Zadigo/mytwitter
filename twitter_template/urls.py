@@ -9,10 +9,10 @@ urlpatterns = [
     url('', include('social_django.urls', namespace='social')),
     
     path('api/v1/', include('api.urls')),
+    
     path('messages/', include('dms.urls')),
     path('feed/', include('feed.urls')),
     path('accounts/', include('accounts.urls')),
-    # path('admin/', admin.site.urls),
     path('admin/', custom_site.urls),
     path('', include('hero.urls')),
 ]

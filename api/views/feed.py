@@ -1,3 +1,5 @@
+from django.shortcuts import get_object_or_404
+from accounts.models import MyUserProfile
 from api.serializers.feed import (CommentSerializer, ReplySerializer,
                                   ValidateCommentSerializer,
                                   ValidateReplySerializer)
@@ -17,20 +19,18 @@ def validate_serializer(serializer, request, **kwargs):
 
 @api_view(['get'])
 def get_conversations(request, **kwargs):
-    queryset = Conversation.objects.all()
-    annotated_comments = queryset.annotate(
-        likes=Count('like__id'),
-        replies=Count('reply__id')
-    )
-    serializer = CommentSerializer(instance=annotated_comments, many=True)
-    return Response(data=serializer.data)
+    if not request.user.is_authenticated:
+        pass
+    user_profile = get_object_or_404(MyUserProfile, id=2)
+    following = user_profile.follows.values_list('id', flat=True)
+    timeline_comments = Conversation.objects.timeline(following)
+    serializer = CommentSerializer(instance=timeline_comments, many=True)
+    return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(['get'])
 def get_replies(request, pk, **kwargs):
-    # queryset = Reply.objects.filter(conversation__id=pk)
-    # annotated_queryset = queryset.annotate(likes=Count('like__id'))
-    annotated_queryset = Conversation.objects.replies_for_comment(pk, user=request.user)
+    annotated_queryset = Reply.objects.replies_for_comment(pk)
     serializer = ReplySerializer(instance=annotated_queryset, many=True)
     return Response(data=serializer.data, status=status.HTTP_200_OK)
 
@@ -39,9 +39,8 @@ def get_replies(request, pk, **kwargs):
 def create_conversation(request, **kwargs):
     serializer = validate_serializer(ValidateCommentSerializer, request)
     comment = serializer.save(request)
-    queryset = Conversation.objects.all()
-    serializer = CommentSerializer(instance=queryset, many=True)
-    return Response(data=serializer.data)
+    serializer = CommentSerializer(instance=comment)
+    return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(['post'])

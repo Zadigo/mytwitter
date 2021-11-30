@@ -4,6 +4,12 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 var routes = [
+    // {
+    //     path: '/',
+    //     redirect: 'feed',
+    //     name: 'home',
+    //     component: () => import('../views/Feed.vue')
+    // },
     {
         path: '/feed',
         name: 'feed',
@@ -28,7 +34,8 @@ var routes = [
 
 var router = new Router({
     mode: 'history',
-    routes: routes
+    routes: routes,
+    scrollBehavior: () => { window.scrollTo(0, 0) }
 })
 
 export default router

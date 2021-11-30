@@ -252,26 +252,29 @@ EMAIL_USE_LOCALTIME = True
 
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+
+# Debug
+
 INTERNAL_IPS = [
     '127.0.0.1'
 ]
 
 
-# CACHE
+# Cache
 
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-#         'LOCATION': os.environ.get('CACHE_FILE_LOCATION', os.path.join(BASE_DIR, 'cache'))
-#     },
-#     'inmemcache': {
-#         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-#         'LOCATION': '127.0.0.1:11211'
-#     }
-# }
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.environ.get('CACHE_FILE_LOCATION', os.path.join(BASE_DIR, 'cache'))
+    },
+    'inmemcache': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211'
+    }
+}
 
 
-# LANGUAGES
+# Languages
 
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale')
@@ -283,23 +286,25 @@ LANGUAGES = [
 ]
 
 
-# STRIPE
+# Stripe
 
-STRIPE_TEST_KEYS = []
+# STRIPE_TEST_KEYS = []
 
-STRIPE_LIVE_KEYS = []
+# STRIPE_LIVE_KEYS = []
 
-try:
-    if DEBUG:
-        stripe.api_key = STRIPE_TEST_KEYS[0]
-    else:
-        stripe.api_key = STRIPE_LIVE_KEYS[0]
-except:
-    pass
+# try:
+#     if DEBUG:
+#         stripe.api_key = STRIPE_TEST_KEYS[0]
+#     else:
+#         stripe.api_key = STRIPE_LIVE_KEYS[0]
+# except:
+#     pass
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
+
+# Rest Framework
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -309,7 +314,7 @@ REST_FRAMEWORK = {
 }
 
 
-# CORS
+# Cors
 
 CORS_ORIGIN_ALLOW_ALL = False
 

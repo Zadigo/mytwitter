@@ -1,3 +1,5 @@
+import '@babel/polyfill'
+import 'mutationobserver-shim'
 import Vue from 'vue'
 import App from './App.vue'
 
@@ -5,8 +7,12 @@ import App from './App.vue'
 import router from './routes'
 import store from './store'
 
+// Mixins
+import globalMixin from './mixins'
+
 // Styling
-require('../node_modules/bootstrap/dist/css/bootstrap.min.css')
+import './plugins/fontawesome'
+import './plugins/bootstrap-vue'
 
 // Plugins
 import globalPlugin from './plugins'
@@ -14,14 +20,19 @@ import vuetify from './plugins/vuetify'
 
 // Components
 import BaseLayout from './components/BaseLayout.vue'
+import ModalNewComment from './components/ModalNewComment.vue'
 
 Vue.config.productionTip = false
 
 // Plugins
 Vue.use(globalPlugin)
 
+// Mixins
+Vue.mixin(globalMixin)
+
 // Components
 Vue.component('base-layout', BaseLayout)
+Vue.component('modal-new-comment', ModalNewComment)
 
 new Vue({
   router,

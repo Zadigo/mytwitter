@@ -3,8 +3,10 @@ from django.db.models.expressions import Q
 
 class DirectMessageManager(QuerySet):
     def my_messages(self, user, queryset=None):
-        logic = (Q(message_sender=user.id) | 
-                    Q(message_receiver=user.id))
+        logic = (
+            Q(message_sender=user.id) | 
+            Q(message_receiver=user.id)
+        )
         if queryset is not None:
             return queryset.filter(logic)
         return self.filter(logic)

@@ -68,13 +68,13 @@ class MyUser(AbstractBaseUser):
 
 class MyUserProfile(models.Model):
     """User profile model used to complete the base user model"""
-    myuser              = models.OneToOneField(MyUser, on_delete=models.CASCADE)
-    customer_id           = models.CharField(max_length=100, blank=True, null=True, help_text='Stripe customer ID')
-    birthdate         = models.DateField(default=timezone.now, blank=True, null=True)
-    telephone           = models.CharField(max_length=20, blank=True, null=True)
-    address            = models.CharField(max_length=150, blank=True, null=True)
-    city               = models.CharField(max_length=100, blank=True, null=True)
-    zip_code           = models.IntegerField(blank=True, null=True)
+    myuser = models.OneToOneField(MyUser, on_delete=models.CASCADE)
+    customer_id = models.CharField(max_length=100, blank=True, null=True, help_text='Stripe customer ID')
+    birthdate = models.DateField(default=timezone.now, blank=True, null=True)
+    telephone = models.CharField(max_length=20, blank=True, null=True)
+    address = models.CharField(max_length=150, blank=True, null=True)
+    city  = models.CharField(max_length=100, blank=True, null=True)
+    zip_code = models.IntegerField(blank=True, null=True)
 
     follows   = models.ManyToManyField('self', related_name='followed_by', symmetrical=False)
     avatar   = ProcessedImageField(
@@ -106,12 +106,6 @@ class SubscribedUser(models.Model):
     def __str__(self):
         return self.email
 
-
-
-
-# #####################
-#       SIGNALS
-# #####################
 
 @receiver(post_save, sender=MyUser)
 def create_user_profile(sender, instance, created, **kwargs):

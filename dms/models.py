@@ -1,6 +1,7 @@
-from django.db import models
 from django.contrib.auth import get_user_model
-from dms import managers
+from django.db import models
+
+from dms.managers import DirectMessageManager
 
 USER_MODEL = get_user_model()
 
@@ -19,9 +20,9 @@ class DirectMessage(models.Model):
     created_on      = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ['created_on']
+        ordering = ['created_on', 'pk']
 
-    objects = managers.DirectMessageManager.as_manager()
+    objects = DirectMessageManager.as_manager()
 
     def __str__(self):
         return self.message_sender.username

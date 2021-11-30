@@ -2,6 +2,7 @@ import authAPI from './auth'
 import profileAPI from './profile'
 import feedAPI from '../api/feed'
 import client from '../../axiosclient'
+import directMessages from './dms'
 
 // var subscribeUser = ($axios) => {
 //     return (email) => {
@@ -23,6 +24,6 @@ import client from '../../axiosclient'
 export default {
     auth: authAPI(client),
     feed: feedAPI(client),
-    profil: profileAPI(client),
-
+    profile: profileAPI(client),
+    directMessages: directMessages(client)
 }

@@ -5,8 +5,8 @@ from django.contrib import auth, messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages import add_message, error, success
 from django.core.mail import BadHeaderError, send_mail
-from django.http.response import (
-    Http404, HttpResponse, HttpResponseForbidden, HttpResponseRedirect)
+from django.http.response import (Http404, HttpResponse, HttpResponseForbidden,
+                                  HttpResponseRedirect)
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
