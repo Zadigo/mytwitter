@@ -1,33 +1,26 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import feedsModule from './modules/feed'
+import _ from 'lodash'
+import { defineStore } from 'pinia'
 
-Vue.use(Vuex)
+const useFeed = defineStore('feed', {
+  state: () => ({
+    posts: [],
+    currentPost: {},
+    currentPostReplies: []
+  }),
 
-var store = new Vuex.Store({    
-    state: () => ({
-        authenticated: false,
-        token: null,
-        openNewCommentModal: false,
-        openSchedulingModal: false
-    }),
-
-    mutations: {
-        toggleModal(state, name) {
-            // Toggle the modal for creating
-            // a new comment
-            state[name] = !state[name]
-        },
-        closeModal(state, name) {
-            // Close the modal -; for functions that
-            // do not require toggling with the state
-            state[name] = false
-        }
+  actions: {
+    loadFromCache () {
+      if (this.posts.length === 0) {
+        this.posts = this.$session.retrieve('posts')
+      }
     },
-    
-    modules: {
-        feedsModule
+    getCurrentPost (id) {
+      this.loadFromCache()
+      this.currentPost = _.find(this.posts, ['id', id * 1]) || {}
     }
+  }
 })
 
-export default store
+export {
+  useFeed
+}

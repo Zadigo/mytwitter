@@ -1,43 +1,25 @@
-import '@babel/polyfill'
-import 'mutationobserver-shim'
-import Vue from 'vue'
+import { createApp, markRaw } from 'vue'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { createPinia } from 'pinia'
+import { createAxios } from './plugins/axios'
+
 import App from './App.vue'
+import router from './router'
 
-// Store + Router
-import router from './routes'
-import store from './store'
+import '@/plugins/fontawesome'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'mdb-ui-kit/css/mdb.min.css'
+import { createVueSession } from './plugins/vue-storages'
 
-// Mixins
-import globalMixin from './mixins'
-
-// Styling
-import './plugins/fontawesome'
-import './plugins/bootstrap-vue'
-
-// Plugins
-import globalPlugin from './plugins'
-import vuetify from './plugins/vuetify'
-
-// Components
-import BaseLayout from './components/BaseLayout.vue'
-import ModalNewComment from './components/ModalNewComment.vue'
-
-Vue.config.productionTip = false
-
-// Plugins
-Vue.use(globalPlugin)
-
-// Mixins
-Vue.mixin(globalMixin)
-
-// Components
-Vue.component('base-layout', BaseLayout)
-Vue.component('modal-new-comment', ModalNewComment)
-
-new Vue({
-  router,
-  store,
-  vuetify,
-
-  render: h => h(App),
-}).$mount('#app')
+const app = createApp(App)
+const session = createVueSession()
+const pinia = createPinia()
+pinia.use(({ store }) => {
+  store.$session = markRaw(session)
+})
+app.use(session)
+app.use(pinia)
+app.use(router)
+app.use(createAxios())
+app.component('FontAwesomeIcon', FontAwesomeIcon)
+app.mount('#app')
