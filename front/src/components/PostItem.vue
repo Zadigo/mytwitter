@@ -2,10 +2,12 @@
   <article :class="{'article-list': hoverable }" class="card shadow-none border-light rounded-0 p-4">
     <div class="card-header d-flex justify-content-between align-items-center border-0">
       <div class="d-flex justify-content-left align-items-center gap-4">
-        <img src="https://placehold.co/70x70" alt="" class="img-fluid rounded-circle">
-        <router-link :to="{ name: 'feed_view' }" class="d-block link-dark">
-          <p class="fw-bold m-0 username">Username</p>
-          <p class="fw-lighter fs-6 m-0">@Username</p>
+        <router-link :to="{ name: 'user_view', params: { id: post.userId } }" class="d-block link-dark d-flex justify-content-left align-items-center gap-4">
+          <img src="https://placehold.co/70x70" alt="" class="img-fluid rounded-circle">
+          <div class="infos">
+            <p class="fw-bold m-0 username">Username</p>
+            <p class="fw-lighter fs-6 m-0">@Username</p>
+          </div>
         </router-link>
       </div>
       <button type="button" class="btn btn-light btn-floating">
@@ -18,6 +20,8 @@
         <p class="card-text fw-light">
           {{ post.body }}
         </p>
+
+        <img src="https://placehold.co/800x800" class="img-fluid" alt="">
       </div>
     </router-link>
 

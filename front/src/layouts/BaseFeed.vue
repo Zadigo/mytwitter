@@ -2,9 +2,27 @@
   <section class="main">
     <!-- Left -->
     <div class="left-section shadow-sm bg-white">
-      <router-link :to="{ name: 'feed_view' }" class="btn btn-lg btn-primary btn-rounded btn-block">
-        Feed
-      </router-link>
+      <div class="mt-3">
+        <router-link :to="{ name: 'feed_view' }" class="btn btn-lg btn-primary btn-rounded btn-block shadow-none my-3">
+          <font-awesome-icon :icon="['fs', 'home']" class="me-2" />Feed
+        </router-link>
+  
+        <router-link :to="{ name: 'feed_view' }" class="btn btn-lg btn-primary btn-rounded btn-block shadow-none my-3">
+          <font-awesome-icon :icon="['fs', 'magnifying-glass']" class="me-2" />Explorer
+        </router-link>
+  
+        <router-link :to="{ name: 'feed_view' }" class="btn btn-lg btn-primary btn-rounded btn-block shadow-none my-3">
+          <font-awesome-icon :icon="['fs', 'bell']" class="me-2" />Notifications
+        </router-link>
+  
+        <router-link :to="{ name: 'feed_view' }" class="btn btn-lg btn-primary btn-rounded btn-block shadow-none my-3">
+          <font-awesome-icon :icon="['fs', 'envelope']" class="me-2" />Messages
+        </router-link>
+  
+        <router-link :to="{ name: 'feed_view' }" class="btn btn-lg btn-primary btn-rounded btn-block shadow-none my-3">
+          <font-awesome-icon :icon="['fs', 'user']" class="me-2" />Profil
+        </router-link>
+      </div>
     </div>
 
     <!-- Middle -->

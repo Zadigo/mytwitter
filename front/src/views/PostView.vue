@@ -12,18 +12,27 @@
         </div>
       </div>
     </div>
+    <replies-item />
   </section>
 </template>
 
 <script>
+import { loadComponent } from '../composables/utils/index'
+import { defineAsyncComponent } from 'vue'
 import { mapActions, storeToRefs } from 'pinia'
 import { useFeed } from '@/store'
 
 import PostItem from '@/components/PostItem.vue'
+import LoadingPostItem from '../components/LoadingPostItem.vue'
 
 export default {
   components: {
-    PostItem
+    PostItem,
+    RepliesItem: defineAsyncComponent({
+      loader: loadComponent('RepliesItem'),
+      loadingComponent: LoadingPostItem,
+      delay: 1000
+    })
   },
   setup () {
     const store = useFeed()

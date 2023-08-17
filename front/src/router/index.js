@@ -4,7 +4,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 const router = createRouter({
   history: createWebHistory(),
-  scrollBehavior: scrollToTop,
+  scrollBehavior: scrollToTop(),
   routes: [
     {
       path: '/',
@@ -16,9 +16,14 @@ const router = createRouter({
           component: loadView('FeedView')
         },
         {
-          path: '/post/:id(\\d+)',
+          path: '/posts/:id(\\d+)',
           name: 'post_view',
           component: loadView('PostView')
+        },
+        {
+          path: '/users/:id(\\d+)',
+          name: 'user_view',
+          component: loadView('UserView')
         }
       ]
     }
